@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Travel Recommendation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="home">
+
+<section class="hero">
+    <div class="hero-content">
+        <h1>Discover Your Dream Destination</h1>
+        <p>Choose a country to explore top destinations</p>
+        <a href="#countries" class="cta-button">Explore Now</a>
+    </div>
+</section>
+
+<nav>
+    <div class="nav-container">
+        <div class="logo">
+            <i class="fas fa-globe"></i> Travel Your Way
+        </div>
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="login.html">Explore</a></li>
+            <li><a href="itinerary.html">Itinerary</a></li>
+            <li><a href="contact.html" target="_blank">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="container" id="countries">
+
+    <div class="card">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/India_Gate_in_New_Delhi_03-2016.jpg">
+        <h2>India</h2>
+        <p>Culture, heritage & diversity</p>
+        <a href="india.html" target="_blank"><button>Explore Places</button></a>
+    </div>
+
+    <div class="card">
+        <img src="https://cdn.mos.cms.futurecdn.net/GyrjPGS4bvwZKQcTKx8FVW.jpg.webp">
+        <h2>Paris</h2>
+        <p>Romantic city & art</p>
+        <a href="paris.html"><button>Explore Places</button></a>
+    </div>
+
+    <div class="card">
+        <img src="https://afar.brightspotcdn.com/dims4/default/150132a/2147483647/strip/true/crop/3000x1592+0+323/resize/1440x764!/format/webp/quality/90/?url=https%3A%2F%2Fk3-prod-afar-media.s3.us-west-2.amazonaws.com%2Fbrightspot%2Fb2%2Ff4%2F9a1ebe3f427f8e5eb937f8df8998%2Ftravelguides-maldives-videomediastudioeurope-shutterstock.jpg">
+        <h2>Maldives</h2>
+        <p>Beaches & luxury resorts</p>
+        <a href="maldives.html" target="_blank"><button>Explore Places</button></a>
+    </div>
+
+    <div class="card">
+        <img src="https://res.cloudinary.com/aenetworks/image/upload/c_fill,ar_2,w_1080,h_540,g_auto/dpr_auto/f_auto/q_auto:eco/v1/gettyimages-1390815938?_a=BAVAZGID0">
+        <h2>Japan</h2>
+        <p>Tradition meets technology</p>
+        <a href="japan.html" target="_blank"><button>Explore Places</button></a>
+    </div>
+
+    <div class="card">
+        <img src="https://www.pelago.com/img/destinations/dubai/0328-0215_dubai-xlarge.jpg">
+        <h2>Dubai</h2>
+        <p>Luxury & skyscrapers</p>
+        <a href="dubai.html" target="_blank"><button>Explore Places</button></a>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Follow Us</h3>
+            <div class="social-media">
+                <a href="#" class="fab fa-instagram"></a>
+                <a href="#" class="fab fa-twitter"></a>
+                <a href="#" class="fab fa-facebook"></a>
+                <a href="#" class="fab fa-youtube"></a>
+            </div>
+        </div>
+    </div>
+    <p>© 2026 Travel Recommendation Project. All rights reserved.</p>
+</footer>
+
+<script>
+    // Contact Form Handler
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const form = this;
+        const successMessage = document.getElementById('successMessage');
+
+        // Get form values
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        // Here you would typically send the data to a server
+        // For now, we'll just show a success message
+        console.log('Form submitted with:', { name, email, message });
+
+        // Show success message
+        form.style.display = 'none';
+        successMessage.style.display = 'block';
+
+        // Reset form
+        form.reset();
+
+        // Optionally, redirect or refresh after a delay
+        setTimeout(() => {
+            form.style.display = 'block';
+            successMessage.style.display = 'none';
+        }, 3000);
+    });
+</script>
+
+</body>
+</html>

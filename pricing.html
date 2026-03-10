@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pricing Details - Travel Recommendation</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="pricing-page">
+
+<header>
+    <h1>Pricing Details</h1>
+    <p>Explore travel costs for top destinations</p>
+</header>
+
+<section class="container">
+
+    <div class="card">
+        <h2><i class="fas fa-map-marker-alt"></i> India</h2>
+        <ul class="pricing-list">
+            <li><strong>Taj Mahal:</strong> Entry - $15 (₹50 for Indians, ₹1100 for foreigners)</li>
+            <li><strong>Goa Beach:</strong> Free entry, Resort stay - $100-300/night</li>
+            <li><strong>Kerala Backwaters:</strong> Houseboat cruise - $50-150/day</li>
+            <li><strong>Jaipur Palace:</strong> Entry - $10-20, City Palace - $15</li>
+            <li><strong>Ladakh Adventure:</strong> Trekking tour - $200-500 (7-10 days)</li>
+        </ul>
+        <p class="note">*Prices are approximate and may vary by season. Additional costs for food, transport, and activities.</p>
+    </div>
+
+    <div class="card">
+        <h2><i class="fas fa-eiffel-tower"></i> Paris</h2>
+        <ul class="pricing-list">
+            <li><strong>Eiffel Tower:</strong> Entry - $18-30 (Lift access)</li>
+            <li><strong>Louvre Museum:</strong> Entry - $17, Under 18 - Free</li>
+            <li><strong>Notre Dame:</strong> Exterior free, Restoration ongoing</li>
+            <li><strong>Seine River Cruise:</strong> 1-hour cruise - $15-20</li>
+            <li><strong>Montmartre:</strong> Free entry, Basilica free</li>
+        </ul>
+        <p class="note">*Prices include standard entry fees. Book tickets online for discounts.</p>
+    </div>
+
+    <div class="card">
+        <h2><i class="fas fa-umbrella-beach"></i> Maldives</h2>
+        <ul class="pricing-list">
+            <li><strong>Resort Stay:</strong> $200-1000/night (All-inclusive)</li>
+            <li><strong>Snorkeling Tour:</strong> $50-100/person</li>
+            <li><strong>Diving Course:</strong> $400-600 (PADI certification)</li>
+            <li><strong>Spa Treatment:</strong> $100-300/session</li>
+            <li><strong>Island Hopping:</strong> $150-250/day</li>
+        </ul>
+        <p class="note">*Maldives is visa-free for most nationalities. Resort fees include meals and activities.</p>
+    </div>
+
+    <div class="card">
+        <h2><i class="fas fa-torii-gate"></i> Japan</h2>
+        <ul class="pricing-list">
+            <li><strong>Tokyo JR Pass:</strong> $300-500 (7-14 days)</li>
+            <li><strong>Kyoto Temples:</strong> Entry - $5-10 per temple</li>
+            <li><strong>Mount Fuji Climb:</strong> Guided tour - $200-400</li>
+            <li><strong>Osaka Aquarium:</strong> Entry - $25</li>
+            <li><strong>Nara Deer Park:</strong> Entry - $8</li>
+        </ul>
+        <p class="note">*Japan Rail Pass saves on transport. Many sites offer discounted combo tickets.</p>
+    </div>
+
+    <div class="card">
+        <h2><i class="fas fa-building"></i> Dubai</h2>
+        <ul class="pricing-list">
+            <li><strong>Burj Khalifa:</strong> Observation deck - $35-125</li>
+            <li><strong>Dubai Mall:</strong> Free entry, Parking - $2-5</li>
+            <li><strong>Palm Jumeirah:</strong> Atlantis resort - $300-800/night</li>
+            <li><strong>Desert Safari:</strong> Full day tour - $50-100</li>
+            <li><strong>Dubai Marina:</strong> Yacht rental - $500-2000/day</li>
+        </ul>
+        <p class="note">*Dubai offers tax-free shopping. Many attractions have online booking discounts.</p>
+    </div>
+
+</section>
+
+<a href="index.html" class="back">⬅ Back to Home</a>
+
+<footer>
+    <p>© 2026 Travel Recommendation Project</p>
+    <div class="social-media">
+        <a href="#" class="fab fa-instagram"></a>
+        <a href="#" class="fab fa-twitter"></a>
+        <a href="#" class="fab fa-facebook"></a>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+    // Set Pricing Detail as active on pricing.html page
+    document.addEventListener('DOMContentLoaded', function() {
+        const pricingLink = document.querySelector('nav a[href="pricing.html"]');
+        if (pricingLink) {
+            pricingLink.classList.add('active');
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Explore Destinations - Travel Your Way</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="explore-page">
+
+<nav>
+    <div class="nav-container">
+        <div class="logo">
+            <i class="fas fa-globe"></i> Travel Your Way
+        </div>
+<ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="explore.html">Explore</a></li>
+            <li><a href="itinerary.html">Itinerary</a></li>
+            <li><a href="contact.html" target="_blank">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="container">
+
+    <div class="section-title">
+        <h2>Affordable Flight Bookings</h2>
+        <p>Book your flights at the best prices with these top booking platforms</p>
+    </div>
+
+    <div class="flight-card">
+        <div class="flight-icon">
+            <i class="fas fa-plane-departure"></i>
+        </div>
+        <h3>Skyscanner</h3>
+        <p>Compares prices from hundreds of airlines and travel sites</p>
+        <a href="https://www.skyscanner.com" target="_blank"><button>Book Now</button></a>
+        <span class="flight-badge">Best Price Guarantee</span>
+    </div>
+
+    <div class="flight-card">
+        <div class="flight-icon">
+            <i class="fas fa-search-dollar"></i>
+        </div>
+        <h3>Google Flights</h3>
+        <p>Smart search with price tracking and flexible date options</p>
+        <a href="https://www.google.com/travel/flights" target="_blank"><button>Book Now</button></a>
+        <span class="flight-badge">Price Alerts</span>
+    </div>
+
+    <div class="flight-card">
+        <div class="flight-icon">
+            <i class="fas fa-tags"></i>
+        </div>
+        <h3>Kayak</h3>
+        <p>Comprehensive search with 'Explore' feature for budget destinations</p>
+        <a href="https://www.kayak.com" target="_blank"><button>Book Now</button></a>
+        <span class="flight-badge">No Hidden Fees</span>
+    </div>
+
+    <div class="flight-card">
+        <div class="flight-icon">
+            <i class="fas fa-percentage"></i>
+        </div>
+        <h3>Momondo</h3>
+        <p>Finds the cheapest flights with unique price insight technology</p>
+        <a href="https://www.momondo.com" target="_blank"><button>Book Now</button></a>
+        <span class="flight-badge">Cheapest Deals</span>
+    </div>
+
+<div class="flight-card">
+        <div class="flight-icon">
+            <i class="fas fa-plane"></i>
+        </div>
+        <h3>Expedia</h3>
+        <p>Bundle flights + hotels for extra savings and rewards</p>
+        <a href="https://www.expedia.com" target="_blank"><button>Book Now</button></a>
+        <span class="flight-badge">10% Off Bundles</span>
+    </div>
+
+    <div class="logout-container">
+        <button id="logoutBtn" class="logout-button">Logout</button>
+    </div>
+
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Follow Us</h3>
+            <div class="social-media">
+                <a href="#" class="fab fa-instagram"></a>
+                <a href="#" class="fab fa-twitter"></a>
+                <a href="#" class="fab fa-facebook"></a>
+                <a href="#" class="fab fa-youtube"></a>
+            </div>
+        </div>
+    </div>
+    <p>&copy; 2026 Travel Recommendation Project. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+    // Check if user is logged in
+    document.addEventListener('DOMContentLoaded', function() {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        
+        if (!isLoggedIn) {
+            // If not logged in, redirect to login page
+            window.location.href = 'login.html';
+        }
+
+// Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = 'index.html';
+        });
+    });
+</script>
+
+</body>
+</html>
+

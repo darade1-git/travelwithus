@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Travel Itinerary - Travel Your Way</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body.itinerary-page {
+            padding-top: 70px;
+        }
+        .itinerary-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 40px 20px;
+            margin: 20px auto;
+            border-radius: 20px;
+            max-width: 1200px;
+        }
+        .itinerary-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .itinerary-header h2 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            animation: fadeInDown 0.8s ease;
+        }
+        .itinerary-header p {
+            color: #666;
+            font-size: 1.1em;
+            animation: fadeInDown 0.8s ease 0.2s both;
+        }
+        
+        /* Country Selection */
+        .country-selector {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        .country-selector h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .country-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .country-btn {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .country-btn:hover, .country-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* Itinerary Card */
+        .itinerary-card {
+            background: white;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+        .itinerary-card.show {
+            display: block;
+        }
+        
+        .day-plan {
+            border-left: 4px solid #667eea;
+            padding-left: 20px;
+            margin: 20px 0;
+            animation: fadeInLeft 0.5s ease;
+        }
+        .day-plan:nth-child(2) { animation-delay: 0.1s; }
+        .day-plan:nth-child(3) { animation-delay: 0.2s; }
+        .day-plan:nth-child(4) { animation-delay: 0.3s; }
+        .day-plan:nth-child(5) { animation-delay: 0.4s; }
+        .day-plan:nth-child(6) { animation-delay: 0.5s; }
+        .day-plan:nth-child(7) { animation-delay: 0.6s; }
+        
+        .day-plan h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .day-plan ul {
+            list-style: none;
+            padding: 0;
+        }
+        .day-plan li {
+            padding: 8px 0;
+            color: #333;
+            position: relative;
+            padding-left: 25px;
+            transition: all 0.3s ease;
+        }
+        .day-plan li:hover {
+            padding-left: 35px;
+            color: #667eea;
+        }
+        .day-plan li::before {
+            content: '\f271';
+            font-family: 'Font Awesome 5 Free';
+            position: absolute;
+            left: 0;
+            color: #e67e22;
+        }
+        .activity-time {
+            font-weight: bold;
+            color: #e67e22;
+            margin-right: 10px;
+        }
+        
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+/* Responsive */
+        @media (max-width: 768px) {
+            .country-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .country-btn {
+                width: 200px;
+            }
+        }
+        
+        /* Back to Home Button */
+        .back-to-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .back-to-home:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body class="pricing-page">
+
+<header>
+    <h1>Plan Your Day</h1>
+    <p>Select a country to view our curated travel itinerary</p>
+</header>
+
+<section class="container">
+    <div class="itinerary-container">
+        <div class="itinerary-header">
+            <h2><i class="fas fa-map-marked-alt"></i> Travel Itinerary</h2>
+            <p>Select a country to view our curated travel itinerary</p>
+        </div>
+
+        <div class="country-selector">
+            <h3>Choose Your Destination</h3>
+            <div class="country-buttons">
+                <button class="country-btn active" data-country="india">India</button>
+                <button class="country-btn" data-country="paris">Paris</button>
+                <button class="country-btn" data-country="maldives">Maldives</button>
+                <button class="country-btn" data-country="japan">Japan</button>
+                <button class="country-btn" data-country="dubai">Dubai</button>
+            </div>
+        </div>
+
+        <!-- India Itinerary -->
+        <div class="itinerary-card show" id="india-itinerary">
+            <div class="day-plan">
+                <h3><i class="fas fa-plane-arrival"></i> Day 1: Delhi Arrival</h3>
+                <ul>
+                    <li><span class="activity-time">09:00 AM</span> - Arrive at Indira Gandhi International Airport</li>
+                    <li><span class="activity-time">11:00 AM</span> - Check in at hotel in Connaught Place</li>
+                    <li><span class="activity-time">02:00 PM</span> - Lunch at Karol Bagh</li>
+                    <li><span class="activity-time">04:00 PM</span> - Visit India Gate</li>
+                    <li><span class="activity-time">07:00 PM</span> - Dinner at Rajouri Garden</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-landmark"></i> Day 2: Historical Delhi</h3>
+                <ul>
+                    <li><span class="activity-time">07:00 AM</span> - Breakfast</li>
+                    <li><span class="activity-time">09:00 AM</span> - Visit Red Fort & Jama Masjid</li>
+                    <li><span class="activity-time">12:00 PM</span> - Lunch at Chandni Chowk</li>
+                    <li><span class="activity-time">02:00 PM</span> - Explore Qutub Minar</li>
+                    <li><span class="activity-time">06:00 PM</span> - Sunset at Humayun's Tomb</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-heart"></i> Day 3: Taj Mahal & Agra</h3>
+                <ul>
+                    <li><span class="activity-time">05:00 AM</span> - Drive to Agra (4 hours)</li>
+                    <li><span class="activity-time">09:00 AM</span> - Visit Taj Mahal at sunrise</li>
+                    <li><span class="activity-time">12:00 PM</span> - Lunch at Taj View Restaurant</li>
+                    <li><span class="activity-time">02:00 PM</span> - Explore Agra Fort</li>
+                    <li><span class="activity-time">05:00 PM</span> - Return to Delhi</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-temple-hindu"></i> Day 4: Jaipur - The Pink City</h3>
+                <ul>
+                    <li><span class="activity-time">06:00 AM</span> - Drive to Jaipur (6 hours)</li>
+                    <li><span class="activity-time">02:00 PM</span> - Lunch and check in</li>
+                    <li><span class="activity-time">04:00 PM</span> - Visit Hawa Mahal</li>
+                    <li><span class="activity-time">06:00 PM</span> - Explore Johri Bazaar</li>
+                    <li><span class="activity-time">08:00 PM</span> - Traditional dinner</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-castle"></i> Day 5: Jaipur Forts</h3>
+                <ul>
+                    <li><span class="activity-time">07:00 AM</span> - Breakfast</li>
+                    <li><span class="activity-time">09:00 AM</span> - Visit Amber Fort</li>
+                    <li><span class="activity-time">12:00 PM</span> - Lunch at Nahargarh Fort</li>
+                    <li><span class="activity-time">02:00 PM</span> - Explore City Palace</li>
+                    <li><span class="activity-time">05:00 PM</span> - Visit Jantar Mantar</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-spa"></i> Day 6: Varanasi Spiritual Journey</h3>
+                <ul>
+                    <li><span class="activity-time">05:00 AM</span> - Flight to Varanasi</li>
+                    <li><span class="activity-time">10:00 AM</span> - Check in and lunch</li>
+                    <li><span class="activity-time">12:00 PM</span> - Visit Kashi Vishwanath Temple</li>
+                    <li><span class="activity-time">05:00 PM</span> - Ganga Aarti at Dashashwamedh Ghat</li>
+                    <li><span class="activity-time">08:00 PM</span> - Boat ride on Ganges</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-plane-departure"></i> Day 7: Departure</h3>
+                <ul>
+                    <li><span class="activity-time">06:00 AM</span> - Sunrise boat ride</li>
+                    <li><span class="activity-time">09:00 AM</span> - Breakfast</li>
+                    <li><span class="activity-time">11:00 AM</span> - Last minute shopping</li>
+                    <li><span class="activity-time">02:00 PM</span> - Airport transfer</li>
+                    <li><span class="activity-time">04:00 PM</span> - Departure</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Paris Itinerary -->
+        <div class="itinerary-card" id="paris-itinerary">
+            <div class="day-plan">
+                <h3><i class="fas fa-plane-arrival"></i> Day 1: Arrival in Paris</h3>
+                <ul>
+                    <li><span class="activity-time">10:00 AM</span> - Arrive at Charles de Gaulle Airport</li>
+                    <li><span class="activity-time">12:00 PM</span> - Check in at hotel near Champs-Élysées</li>
+                    <li><span class="activity-time">02:00 PM</span> - Lunch at Café de Flore</li>
+                    <li><span class="activity-time">04:00 PM</span> - Walk along Champs-Élysées</li>
+                    <li><span class="activity-time">07:00 PM</span> - Dinner at Montmartre</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-eiffel-tower"></i> Day 2: Eiffel Tower & Seine</h3>
+                <ul>
+                    <li><span class="activity-time">08:00 AM</span> - Breakfast at hotel</li>
+                    <li><span class="activity-time">10:00 AM</span> - Visit Eiffel Tower</li>
+                    <li><span class="activity-time">01:00 PM</span> - Lunch at Trocadéro</li>
+                    <li><span class="activity-time">03:00 PM</span> - Seine River Cruise</li>
+                    <li><span class="activity-time">07:00 PM</span> - Dinner cruise on Seine</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-palette"></i> Day 3: Art & Culture</h3>
+                <ul>
+                    <li><span class="activity-time">08:00 AM</span> - Early entry to Louvre Museum</li>
+                    <li><span class="activity-time">12:00 PM</span> - Lunch at Louvre courtyard</li>
+                    <li><span class="activity-time">02:00 PM</span> - Visit Musée d'Orsay</li>
+                    <li><span class="activity-time">05:00 PM</span> - Explore Tuileries Garden</li>
+                    <li><span class="activity-time">07:00 PM</span> - Dinner at Latin Quarter</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-church"></i> Day 4: Historic Paris</h3>
+                <ul>
+                    <li><span class="activity-time">09:00 AM</span> - Visit Notre-Dame (exterior)</li>
+                    <li><span class="activity-time">11:00 AM</span> - Explore Île de la Cité</li>
+                    <li><span class="activity-time">01:00 PM</span> - Lunch at Le Marais</li>
+                    <li><span class="activity-time">03:00 PM</span> - Visit Panthéon</li>
+                    <li><span class="activity-time">06:00 PM</span> - Sunset at Sacré-Cœur</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-shopping-bag"></i> Day 5: Shopping & Fashion</h3>
+                <ul>
+                    <li><span class="activity-time">10:00 AM</span> - Shopping at Galeries Lafayette</li>
+                    <li><span class="activity-time">01:00 PM</span> - Lunch at rooftop restaurant</li>
+                    <li><span class="activity-time">03:00 PM</span> - Explore Saint-Germain-des-Prés</li>
+                    <li><span class="activity-time">05:00 PM</span> - Visit Musée Picasso</li>
+                    <li><span class="activity-time">08:00 PM</span> - Farewell dinner at Eiffel Tower restaurant</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-train"></i> Day 6: Versailles Day Trip</h3>
+                <ul>
+                    <li><span class="activity-time">08:00 AM</span> - Day trip to Palace of Versailles</li>
+                    <li><span class="activity-time">10:00 AM</span> - Explore Palace of Versailles</li>
+                    <li><span class="activity-time">01:00 PM</span> - Lunch in Versailles gardens</li>
+                    <li><span class="activity-time">03:00 PM</span> - Visit Trianon Estate</li>
+                    <li><span class="activity-time">06:00 PM</span> - Return to Paris</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-plane-departure"></i> Day 7: Departure</h3>
+                <ul>
+                    <li><span class="activity-time">08:00 AM</span> - Breakfast</li>
+                    <li><span class="activity-time">10:00 AM</span> - Last minute shopping</li>
+                    <li><span class="activity-time">12:00 PM</span> - Check out</li>
+                    <li><span class="activity-time">02:00 PM</span> - Airport transfer</li>
+                    <li><span class="activity-time">04:00 PM</span> - Departure</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Maldives Itinerary -->
+        <div class="itinerary-card" id="maldives-itinerary">
+            <div class="day-plan">
+                <h3><i class="fas fa-plane-arrival"></i> Day 1: Arrival in Paradise</h3>
+                <ul>
+                    <li><span class="activity-time">11:00 AM</span> - Arrive at Velana International Airport</li>
+                    <li><span class="activity-time">12:00 PM</span> - Speed boat to resort</li>
+                    <li><span class="activity-time">02:00 PM</span> - Check in to overwater villa</li>
+                    <li><span class="activity-time">04:00 PM</span> - Explore resort island</li>
+                    <li><span class="activity-time">07:00 PM</span> - Welcome dinner on beach</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-swimming-pool"></i> Day 2: Beach & Relaxation</h3>
+                <ul>
+                    <li><span class="activity-time">07:00 AM</span> - Sunrise beach walk</li>
+                    <li><span class="activity-time">09:00 AM</span> - Breakfast</li>
+                    <li><span class="activity-time">11:00 AM</span> - Swimming in turquoise lagoon</li>
+                    <li><span class="activity-time">02:00 PM</span> - Lunch at beach restaurant</li>
+                    <li><span class="activity-time">04:00 PM</span> - Spa treatment</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-fish"></i> Day 3: Snorkeling Adventure</h3>
+                <ul>
+                    <li><span class="activity-time">08:00 AM</span> - Snorkeling trip to coral reef</li>
+                    <li><span class="activity-time">11:00 AM</span> - Visit manta ray point</li>
+                    <li><span class="activity-time">01:00 PM</span> - BBQ lunch on sandbank</li>
+                    <li><span class="activity-time">03:00 PM</span> - Afternoon nap</li>
+                    <li><span class="activity-time">06:00 PM</span> - Sunset dolphin cruise</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-water"></i> Day 4: Water Sports</h3>
+                <ul>
+                    <li><span class="activity-time">08:00 AM</span> - Jet skiing</li>
+                    <li><span class="activity-time">10:00 AM</span> - Kayaking</li>
+                    <li><span class="activity-time">12:00 PM</span> - Lunch</li>
+                    <li><span class="activity-time">02:00 PM</span> - Wind surfing</li>
+                    <li><span class="activity-time">05:00 PM</span> - Beach volleyball</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-ship"></i> Day 5: Island Hopping</h3>
+                <ul>
+                    <li><span class="activity-time">09:00 AM</span> - Visit local inhabited island</li>
+                    <li><span class="activity-time">11:00 AM</span> - Explore Male city</li>
+                    <li><span class="activity-time">01:00 PM</span> - Local fish market lunch</li>
+                    <li><span class="activity-time">03:00 PM</span> - Visit President's office</li>
+                    <li><span class="activity-time">05:00 PM</span> - Return to resort</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-moon"></i> Day 6: Night Fishing & Romance</h3>
+                <ul>
+                    <li><span class="activity-time">09:00 AM</span> - Private snorkeling trip</li>
+                    <li><span class="activity-time">12:00 PM</span> - Seafood lunch</li>
+                    <li><span class="activity-time">03:00 PM</span> - Sunset photography session</li>
+                    <li><span class="activity-time">07:00 PM</span> - Night fishing expedition</li>
+                    <li><span class="activity-time">09:00 PM</span> - Candlelight dinner on beach</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-plane-departure"></i> Day 7: Departure</h3>
+                <ul>
+                    <li><span class="activity-time">08:00 AM</span> - Last sunrise swim</li>
+                    <li><span class="activity-time">10:00 AM</span> - Breakfast</li>
+                    <li><span class="activity-time">12:00 PM</span> - Check out</li>
+                    <li><span class="activity-time">02:00 PM</span> - Speed boat to airport</li>
+                    <li><span class="activity-time">04:00 PM</span> - Departure</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Japan Itinerary -->
+        <div class="itinerary-card" id="japan-itinerary">
+            <div class="day-plan">
+                <h3><i class="fas fa-plane-arrival"></i> Day 1: Tokyo Arrival</h3>
+                <ul>
+                    <li><span class="activity-time">10:00 AM</span> - Arrive at Narita/Haneda Airport</li>
+                    <li><span class="activity-time">12:00 PM</span> - Travel to hotel in Shinjuku</li>
+                    <li><span class="activity-time">02:00 PM</span> - Lunch at Ichiran Ramen</li>
+                    <li><span class="activity-time">04:00 PM</span> - Explore Shinjuku</li>
+                    <li><span class="activity-time">07:00 PM</span> - Dinner at Omoide Yokocho</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-torii-gate"></i> Day 2: Traditional Tokyo</h3>
+                <ul>
+                    <li><span class="activity-time">07:00 AM</span> - Visit Senso-ji Temple</li>
+                    <li><span class="activity-time">10:00 AM</span> - Explore Nakamise Street</li>
+                    <li><span class="activity-time">12:00 PM</span> - Lunch in Asakusa</li>
+                    <li><span class="activity-time">02:00 PM</span> - Visit Ueno Park</li>
+                    <li><span class="activity-time">06:00 PM</span> - Akihabara exploration</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-mountain"></i> Day 3: Mount Fuji</h3>
+                <ul>
+                    <li><span class="activity-time">06:00 AM</span> - Bullet train to Fuji</li>
+                    <li><span class="activity-time">09:00 AM</span> - Visit Mount Fuji 5th Station</li>
+                    <li><span class="activity-time">12:00 PM</span> - Lunch with Mt. Fuji view</li>
+                    <li><span class="activity-time">02:00 PM</span> - Lake Kawaguchi cruise</li>
+                    <li><span class="activity-time">05:00 PM</span> - Return to Tokyo</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-train"></i> Day 4: Kyoto Journey</h3>
+                <ul>
+                    <li><span class="activity-time">07:00 AM</span> - Bullet train to Kyoto</li>
+                    <li><span class="activity-time">10:00 AM</span> - Check in at ryokan</li>
+                    <li><span class="activity-time">12:00 PM</span> - Lunch at Pontocho Alley</li>
+                    <li><span class="activity-time">02:00 PM</span> - Visit Fushimi Inari Shrine</li>
+                    <li><span class="activity-time">06:00 PM</span> - Traditional kaiseki dinner</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-leaf"></i> Day 5: Ancient Temples</h3>
+                <ul>
+                    <li><span class="activity-time">08:00 AM</span> - Visit Kinkaku-ji (Golden Pavilion)</li>
+                    <li><span class="activity-time">10:00 AM</span> - Explore Arashiyama Bamboo Grove</li>
+                    <li><span class="activity-time">12:00 PM</span> - Lunch in Arashiyama</li>
+                    <li><span class="activity-time">02:00 PM</span> - Visit Kiyomizu-dera Temple</li>
+                    <li><span class="activity-time">05:00 PM</span> - Gion district walk</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-utensils"></i> Day 6: Osaka Food Adventure</h3>
+                <ul>
+                    <li><span class="activity-time">08:00 AM</span> - Train to Osaka</li>
+                    <li><span class="activity-time">10:00 AM</span> - Visit Osaka Castle</li>
+                    <li><span class="activity-time">12:00 PM</span> - Dotonbori food tour</li>
+                    <li><span class="activity-time">03:00 PM</span> - Visit Kuromon Market</li>
+                    <li><span class="activity-time">06:00 PM</span> - Dinner at Dotonbori</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-plane-departure"></i> Day 7: Departure</h3>
+                <ul>
+                    <li><span class="activity-time">08:00 AM</span> - Breakfast</li>
+                    <li><span class="activity-time">10:00 AM</span> - Last minute shopping</li>
+                    <li><span class="activity-time">12:00 PM</span> - Check out</li>
+                    <li><span class="activity-time">02:00 PM</span> - Airport transfer</li>
+                    <li><span class="activity-time">04:00 PM</span> - Departure</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Dubai Itinerary -->
+        <div class="itinerary-card" id="dubai-itinerary">
+            <div class="day-plan">
+                <h3><i class="fas fa-plane-arrival"></i> Day 1: Dubai Arrival</h3>
+                <ul>
+                    <li><span class="activity-time">10:00 AM</span> - Arrive at Dubai International Airport</li>
+                    <li><span class="activity-time">12:00 PM</span> - Check in at hotel in Downtown</li>
+                    <li><span class="activity-time">02:00 PM</span> - Lunch at Dubai Mall</li>
+                    <li><span class="activity-time">04:00 PM</span> - Visit Dubai Aquarium</li>
+                    <li><span class="activity-time">07:00 PM</span> - Dubai Fountain show</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-building"></i> Day 2: Burj Khalifa & Modern Dubai</h3>
+                <ul>
+                    <li><span class="activity-time">08:00 AM</span> - Early entry to Burj Khalifa</li>
+                    <li><span class="activity-time">11:00 AM</span> - Observation deck views</li>
+                    <li><span class="activity-time">01:00 PM</span> - Lunch with skyline view</li>
+                    <li><span class="activity-time">03:00 PM</span> - Dubai Mall shopping</li>
+                    <li><span class="activity-time">07:00 PM</span> - Dinner at Burj Khalifa restaurant</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-umbrella-beach"></i> Day 3: Beach & Marina</h3>
+                <ul>
+                    <li><span class="activity-time">09:00 AM</span> - JBR Beach morning</li>
+                    <li><span class="activity-time">12:00 PM</span> - Lunch at Beach Club</li>
+                    <li><span class="activity-time">02:00 PM</span> - Visit Dubai Marina</li>
+                    <li><span class="activity-time">04:00 PM</span> - Bluewaters Island</li>
+                    <li><span class="activity-time">07:00 PM</span> - Marina yacht dinner</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-truck-monster"></i> Day 4: Desert Safari</h3>
+                <ul>
+                    <li><span class="activity-time">03:00 PM</span> - Desert safari pickup</li>
+                    <li><span class="activity-time">04:00 PM</span> - Dune bashing adventure</li>
+                    <li><span class="activity-time">06:00 PM</span> - Sunset photography</li>
+                    <li><span class="activity-time">07:00 PM</span> - Bedouin camp dinner</li>
+                    <li><span class="activity-time">09:00 PM</span> - Return to hotel</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-landmark"></i> Day 5: Old Dubai</h3>
+                <ul>
+                    <li><span class="activity-time">08:00 AM</span> - Visit Gold Souk</li>
+                    <li><span class="activity-time">10:00 AM</span> - Spice Souk exploration</li>
+                    <li><span class="activity-time">12:00 PM</span> - Lunch at local restaurant</li>
+                    <li><span class="activity-time">02:00 PM</span> - Abra ride across creek</li>
+                    <li><span class="activity-time">04:00 PM</span> - Visit Dubai Museum</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-island"></i> Day 6: Palm Jumeirah</h3>
+                <ul>
+                    <li><span class="activity-time">10:00 AM</span> - Visit Atlantis The Palm</li>
+                    <li><span class="activity-time">12:00 PM</span> - Aquaventure Waterpark</li>
+                    <li><span class="activity-time">02:00 PM</span> - Lunch at Palm</li>
+                    <li><span class="activity-time">04:00 PM</span> - Beach relaxation</li>
+                    <li><span class="activity-time">07:00 PM</span> - Sunset at The Pointe</li>
+                </ul>
+            </div>
+
+            <div class="day-plan">
+                <h3><i class="fas fa-plane-departure"></i> Day 7: Departure</h3>
+                <ul>
+                    <li><span class="activity-time">09:00 AM</span> - Breakfast</li>
+                    <li><span class="activity-time">11:00 AM</span> - Last minute shopping</li>
+                    <li><span class="activity-time">01:00 PM</span> - Check out</li>
+                    <li><span class="activity-time">03:00 PM</span> - Airport transfer</li>
+                    <li><span class="activity-time">05:00 PM</span> - Departure</li>
+                </ul>
+            </div>
+        </div>
+
+        <a href="index.html" class="back">⬅ Back to Home</a>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Follow Us</h3>
+            <div class="social-media">
+                <a href="#" class="fab fa-instagram"></a>
+                <a href="#" class="fab fa-twitter"></a>
+                <a href="#" class="fab fa-facebook"></a>
+                <a href="#" class="fab fa-youtube"></a>
+            </div>
+        </div>
+    </div>
+    <p>&copy; 2026 Travel Recommendation Project. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+    // Country selection functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const countryButtons = document.querySelectorAll('.country-btn');
+        const itineraryCards = document.querySelectorAll('.itinerary-card');
+        
+        countryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                countryButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active to clicked button
+                this.classList.add('active');
+                
+                // Hide all itinerary cards
+                itineraryCards.forEach(card => card.classList.remove('show'));
+                
+                // Show selected country itinerary
+                const country = this.dataset.country;
+                document.getElementById(country + '-itinerary').classList.add('show');
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
+
